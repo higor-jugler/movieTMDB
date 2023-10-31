@@ -8,13 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.movietmdb.placeholder.PlaceholderContent
 
 /**
- * A fragment representing a list of Items.
+ * Here the interface for the fragment to render
+ * the details screen is instantiated
  */
-class MovieFragment : Fragment() {
+class MovieFragment : Fragment(), MovieItemListener {
 
     private var columnCount = 1
 
@@ -44,10 +46,17 @@ class MovieFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyMovieRecyclerViewAdapter(PlaceholderContent.ITEMS)
+
+                //Tell the adapter the class to be rendered
+                adapter = MyMovieRecyclerViewAdapter(PlaceholderContent.ITEMS, this@MovieFragment)
             }
         }
         return view
+    }
+
+    //Past the navigation to the position to be rendered
+    override fun onItemSelected(position: Int) {
+        findNavController().navigate(R.id.moviesDetailsFragment)
     }
 
     companion object {
