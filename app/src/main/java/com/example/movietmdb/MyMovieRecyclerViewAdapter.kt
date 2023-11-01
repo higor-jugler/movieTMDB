@@ -9,11 +9,6 @@ import android.widget.TextView
 import com.example.movietmdb.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.movietmdb.databinding.FragmentItemBinding
 
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
-
 //Interface to render details element option
 interface MovieItemListener {
 
@@ -42,8 +37,7 @@ class MyMovieRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+        holder.bindItem(item)
 
         holder.view.setOnClickListener {
             listener.onItemSelected(position)
@@ -52,15 +46,11 @@ class MyMovieRecyclerViewAdapter(
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
-
-        //Instantiating view to couple with object at click time
-        val view: View = binding.root
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+    inner class ViewHolder(private val binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        val view = binding.root
+        fun bindItem(item: PlaceholderItem){
+            binding.movieItem = item
+            binding.executePendingBindings()
         }
     }
-
 }
