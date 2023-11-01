@@ -16,12 +16,18 @@ interface MovieItemListener {
 }
 
 class MyMovieRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>,
-
     //Instantiating interface
     private val listener: MovieItemListener
 
 ) : RecyclerView.Adapter<MyMovieRecyclerViewAdapter.ViewHolder>() {
+
+    private val values: MutableList<PlaceholderItem> = ArrayList<PlaceholderItem>()
+
+    fun updateDate(movieList: List<PlaceholderItem>) {
+        values.clear()
+        values.addAll(movieList)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -32,7 +38,6 @@ class MyMovieRecyclerViewAdapter(
                 false
             )
         )
-
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -46,9 +51,10 @@ class MyMovieRecyclerViewAdapter(
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(private val binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: FragmentItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val view = binding.root
-        fun bindItem(item: PlaceholderItem){
+        fun bindItem(item: PlaceholderItem) {
             binding.movieItem = item
             binding.executePendingBindings()
         }
