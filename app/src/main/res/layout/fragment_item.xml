@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="movieItem"
-            type="com.example.movietmdb.placeholder.PlaceholderContent.PlaceholderItem" />
+            type="com.example.movietmdb.data.Movie" />
     </data>
 
     <LinearLayout
@@ -16,47 +17,50 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/item_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/text_margin"
-                    android:layout_marginTop="20dp"
-                    android:text="@{movieItem.id}"
-                    android:textAppearance="?attr/textAppearanceListItem"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/imageView"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/content"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@{movieItem.content}"
-                    android:layout_margin="@dimen/text_margin"
-                    android:textAppearance="?attr/textAppearanceListItem"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                android:layout_height="match_parent"
+                android:minHeight="350dp">
 
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
+                    android:contentDescription="@string/movie_poster"
                     android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/img" />
+
+                <TextView
+                    android:id="@+id/content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_margin"
+                    android:text="@{movieItem.title}"
+                    android:textAppearance="?attr/textAppearanceListItem"
+                    app:layout_constraintBottom_toTopOf="@+id/button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/item_number"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_margin="@dimen/text_margin"-->
+                <!--                    android:layout_marginTop="20dp"-->
+                <!--                    android:text="@{movieItem.id}"-->
+                <!--                    android:textAppearance="?attr/textAppearanceListItem"-->
+                <!--                    android:textColor="@color/white"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintStart_toStartOf="@+id/imageView"-->
+                <!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
                 <Button
                     android:id="@+id/button"
@@ -75,3 +79,7 @@
     </LinearLayout>
 
 </layout>
+
+    <!--
+    app:srcUrl='@{movieItem.imageUrl ?? ""}'
+    -->

@@ -1,17 +1,14 @@
-package com.example.movietmdb
+package com.example.movietmdb.movieHome
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import com.example.movietmdb.data.Movie
 
-import com.example.movietmdb.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.movietmdb.databinding.FragmentItemBinding
 
 //Interface to render details element option
 interface MovieItemListener {
-
     fun onItemSelected(position: Int)
 }
 
@@ -20,10 +17,9 @@ class MyMovieRecyclerViewAdapter(
     private val listener: MovieItemListener
 
 ) : RecyclerView.Adapter<MyMovieRecyclerViewAdapter.ViewHolder>() {
+    private val values: MutableList<Movie> = ArrayList()
 
-    private val values: MutableList<PlaceholderItem> = ArrayList<PlaceholderItem>()
-
-    fun updateDate(movieList: List<PlaceholderItem>) {
+    fun updateDate(movieList: List<Movie>) {
         values.clear()
         values.addAll(movieList)
         notifyDataSetChanged()
@@ -54,7 +50,7 @@ class MyMovieRecyclerViewAdapter(
     inner class ViewHolder(private val binding: FragmentItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val view = binding.root
-        fun bindItem(item: PlaceholderItem) {
+        fun bindItem(item: Movie) {
             binding.movieItem = item
             binding.executePendingBindings()
         }

@@ -4,19 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="com.example.movietmdb.ViewDataState" />
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.movietmdb.MovieViewModel" />
     </data>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
-        android:name="com.example.movietmdb.MoviesFragment"
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        app:layoutManager="LinearLayoutManager"
-        tools:context=".MovieFragment"
-        tools:listitem="@layout/fragment_item" />
+        android:gravity="center">
+
+        <ProgressBar
+            android:id="@+id/progressBarList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:visibility="@{viewModel.viewDataStateLiveData == ViewDataState.LOADING ? View.VISIBLE : View.GONE}" />
+
+        <TextView
+            android:id="@+id/errorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal|fill_horizontal|center_vertical|fill_vertical"
+            android:text="@string/error_when_loading"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:name="com.example.movietmdb.MoviesFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            app:layoutManager="LinearLayoutManager"
+            tools:context=".MovieFragment"
+            tools:listitem="@layout/fragment_item" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

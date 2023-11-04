@@ -5,6 +5,10 @@
 
     <data>
 
+        <import type="com.example.movietmdb.ViewDataState" />
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.movietmdb.MovieViewModel" />
@@ -13,25 +17,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MovieDetailsFragment">
+        tools:context=".movieDetails.MovieDetailsFragment">
 
-        <ImageView
-            android:id="@+id/imagePoster"
+        <ProgressBar
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
-            android:layout_height="250dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img"
-            app:layout_constraintBottom_toTopOf="@+id/textTitlePoster"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.viewDataStateLiveData == ViewDataState.LOADING ? View.VISIBLE : View.GONE}"
+            app:layout_constraintStart_toStartOf="@+id/textTitlePoster"
+            app:layout_constraintTop_toBottomOf="parent" />
 
         <TextView
             android:id="@+id/textTitlePoster"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:text="@{viewModel.movieDetailsLiveData.title}"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/textContentPoster"
@@ -40,19 +39,48 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imagePoster" />
 
+        <ImageView
+            android:id="@+id/imagePoster"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:contentDescription="@string/movie_description"
+            android:scaleType="centerCrop"
+
+            app:layout_constraintBottom_toTopOf="@+id/textTitlePoster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ImageContrastCheck"
+            tools:src="@drawable/img" />
+
         <TextView
             android:id="@+id/textContentPoster"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxEms="140"
-            android:text="@{viewModel.movieDetailsLiveData.content}"
+            android:text="@{viewModel.movieDetailsLiveData.overview}"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/imageCarousel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textTitlePoster" />
+
+        <TextView
+            android:id="@+id/textRating"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center_vertical"
+            android:text="@{viewModel.voteAverageString}"
+            android:textFontWeight="6"
+            app:layout_constraintBottom_toTopOf="@id/imageCarousel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textContentPoster" />
 
         <org.imaginativeworld.whynotimagecarousel.ImageCarousel
             android:id="@+id/imageCarousel"
@@ -66,6 +94,8 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </layout>
+
+    <!--
+    app:scrUrl="@{viewModel.movieDetailsLiveData.imageUrl}"
+    -->
