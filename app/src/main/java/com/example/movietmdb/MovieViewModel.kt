@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movietmdb.api.MovieService
 import com.example.movietmdb.data.ApiCredentials
+import com.example.movietmdb.data.Event
 import com.example.movietmdb.data.Movie
 import com.example.movietmdb.helpers.ImageUtil
 import kotlinx.coroutines.async
@@ -35,7 +36,7 @@ class MovieViewModel : ViewModel() {
 
     val navigationToDetailLiveData
         get() = _navigationToDetailLiveData
-    private val _navigationToDetailLiveData = MutableLiveData<Unit>()
+    private val _navigationToDetailLiveData = MutableLiveData<Event<Unit>>()
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(ApiCredentials().baseUrl)
@@ -55,7 +56,7 @@ class MovieViewModel : ViewModel() {
         movieDetails?.let {
             viewModelScope.launch {
                 _movieDetailsLiveData.postValue(it)
-                _navigationToDetailLiveData.postValue(Unit)
+                _navigationToDetailLiveData.postValue(Event<Unit>(Unit))
 
                 // Loading image from movie selected
                 val carouselImages =
@@ -74,7 +75,7 @@ class MovieViewModel : ViewModel() {
         val page = 1
 
         // Call API
-        viewModelScope.launch  {
+        viewModelScope.launch {
             val response = movieService.getLatestMovies(apiKey, page)
 
             if (response.isSuccessful) {

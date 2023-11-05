@@ -58,6 +58,7 @@ class MovieFragment : Fragment(), MovieItemListener {
         errorTextView: TextView
     ) {
         viewModel.movieListLiveData.observe(viewLifecycleOwner, Observer {
+
             it?.let {
 
                 adapter.updateDate(it)
@@ -84,6 +85,7 @@ class MovieFragment : Fragment(), MovieItemListener {
                     movieList.visibility = View.VISIBLE
                     errorTextView.visibility = View.GONE
                 }
+
                 else -> {
                     // When the value is null
                     progressBar.visibility = View.GONE
@@ -94,11 +96,12 @@ class MovieFragment : Fragment(), MovieItemListener {
             }
         })
 
-
         // Integrate Nav
         viewModel.navigationToDetailLiveData.observe(viewLifecycleOwner, Observer {
-            val action = MovieFragmentDirections.actionMoviesFragmentToMoviesDetailsFragment()
-            findNavController().navigate(action)
+            it.getContentIfNotHandle()?.let {
+                val action = MovieFragmentDirections.actionMoviesFragmentToMoviesDetailsFragment()
+                findNavController().navigate(action)
+            }
         })
     }
 
