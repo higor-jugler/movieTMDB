@@ -11,6 +11,10 @@ import com.example.movietmdb.MovieViewModel
 import com.example.movietmdb.R
 import com.example.movietmdb.databinding.FragmentMovieDetailsBinding
 
+/**
+ * This class is responsible for populating the list fragment
+ */
+
 class MovieDetailsFragment : Fragment() {
     private val viewModel by navGraphViewModels<MovieViewModel>(R.id.movie_graph) { defaultViewModelProviderFactory }
 

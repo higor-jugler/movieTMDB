@@ -45,14 +45,12 @@
             android:layout_height="250dp"
             android:contentDescription="@string/movie_description"
             android:scaleType="centerCrop"
-
             app:layout_constraintBottom_toTopOf="@+id/textTitlePoster"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ImageContrastCheck"
-            tools:src="@drawable/img" />
+            app:srcUrl="@{viewModel.movieDetailsLiveData.imageUrl}" />
 
         <TextView
             android:id="@+id/textContentPoster"
@@ -90,6 +88,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
+            android:visibility="@{viewModel.carouselImagesLiveData.isEmpty() == true ? View.GONE : View.VISIBLE}"
+            app:imageList="@{viewModel.carouselImagesLiveData}"
             app:layout_constraintTop_toBottomOf="@+id/textContentPoster" />
 
 

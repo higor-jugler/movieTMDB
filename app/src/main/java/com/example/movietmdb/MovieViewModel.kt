@@ -73,7 +73,8 @@ class MovieViewModel : ViewModel() {
         val apiKey = ApiCredentials().apiKey
         val page = 1
 
-        viewModelScope.async {
+        // Call API
+        viewModelScope.launch  {
             val response = movieService.getLatestMovies(apiKey, page)
 
             if (response.isSuccessful) {
